@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+type GastosMensaisGastos {
+  gasto Float
+  nome  String
+}
+
+type PedidosProdutos {
+  Nome          String
+  ProdutoId     String
+  Quantidade    Int
+  Subtotal      Float
+  ValorUnitario Float
+}
+
+model Clientes {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  celular  String
+  endereco String
+  nome     String
+}
+
+model GastosMensais {
+  id        String                @id @default(auto()) @map("_id") @db.ObjectId
+  UsuarioId String                @db.ObjectId
+  gastos    GastosMensaisGastos[]
+  mes       String
+}
+
+model Pedidos {
+  id              String            @id @default(auto()) @map("_id") @db.ObjectId
+  ContatoCliente  String
+  DataPedido      DateTime          @db.Date
+  EnderecoCliente String
+  NomeCliente     String
+  Produtos        PedidosProdutos[]
+  Status          Boolean?
+  ValorTotal      Float
+}
+
+model Produtos {
+  id              String                    @id @default(auto()) @map("_id") @db.ObjectId
+  categoria       String?
+  data_criacao    DateTime                  @db.Date
+  descricao       String?
+  disponibilidade Boolean?
+  estoque         Int
+  imagem          String
+  nome            String
+  valor           Unsupported("Decimal128")
+}
+
+model Usuarios {
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  Cpf   String?
+  Nome  String?
+  Senha String?
+}
