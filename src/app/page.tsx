@@ -90,8 +90,6 @@ export default function Home() {
                             Instagram
                         </div>
                     </LinkButton>
-
-                    <Link href='/catalogo'>Catalogo</Link>
                 </div>
             </motion.div>
         </main>
