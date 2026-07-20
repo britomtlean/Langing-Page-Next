@@ -44,7 +44,7 @@ export default function Home() {
 
                 {/* BUTTONS */}
                 <div className="mt-6 flex flex-col gap-3">
-                    <LinkButton href="/catalogo">
+                    <LinkButton href="/home">
                         <div className="flex justify-center items-center gap-4">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
