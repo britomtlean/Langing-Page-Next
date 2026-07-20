@@ -6,7 +6,7 @@ import Link from 'next/link';
 import prisma from '../_db/prisma';
 import Produtos from './Produtos';
 
-const page =  () => {
+const Page =  () => {
 
     const [categoria, setCategoria] = useState<string | null>(null);
     //const produtos = await prisma.produtos.findMany();
@@ -133,4 +133,4 @@ const page =  () => {
     );
 };
 
-export default page;
+export default Page;
