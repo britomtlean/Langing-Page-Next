@@ -2,12 +2,13 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
-import { ul } from 'framer-motion/client';
 import type { Produtos } from '@prisma/client';
+import { useCarrinho } from '@/context/ContextProvider';
 
 
 const Produtos = ({produtos} : {produtos: any}) => {
+
+    const { adicionarProduto } = useCarrinho();
 
     const [categoria, setCategoria] = useState<string | null>(null);
 
@@ -16,7 +17,7 @@ const Produtos = ({produtos} : {produtos: any}) => {
 
     return (
         <>
-            <div className="w-full h-full flex flex-col gap-8 px-8">
+            <div className="w-full h-full flex flex-col gap-8 lg:px-8">
                 <div className="flex lg:flex-row lg:justify-between flex-col lg:gap-0 gap-4 ">
                     <select
                         defaultValue={''}
@@ -35,35 +36,62 @@ const Produtos = ({produtos} : {produtos: any}) => {
                         className="bg-gray-200 lg:w-2/5 w-full outline-none border border-slate-300 p-4 rounded-md"
                         type="search"
                         placeholder="Pesquisar produtos..."
+                        onFocus={() => {
+                            '';
+                        }}
                     />
                 </div>
 
-                <div className="flex flex-wrap flex-col w-full h-full gap-4">
-                    <h1 className="font-black text-3xl w-full text-center">{categoria ? categoria : 'Categorias'}</h1>
+                <div className="flex flex-wrap flex-col w-full h-full gap-4 pt-8">
+                    <h1 className="font-black text-3xl w-full text-center lg:text-left">{categoria ? categoria : 'Categorias'}</h1>
                     {categoria != null ? (
                         <div
                             className="w-full h-full p-4
-                                grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-2"
+            grid lg:grid-cols-4 gap-4"
                         >
                             {Array.isArray(produtoFiltrado) &&
-                                produtoFiltrado.map((array: Produtos) => (
-                                    <button
-                                        key={array.id}
-                                        className="w-full h-[200px] lg:h-full p-20 border border-slate-300 rounded-lg
-                                            flex flex-col items-center justify-center gap-4"
-                                        onClick={() => {
-                                            setCategoria('Mais Vendidos');
-                                        }}
+                                produtoFiltrado.map((produto: Produtos) => (
+                                    <div
+                                        key={produto.id}
+                                        className="border border-slate-300 rounded-xl bg-white shadow-sm
+                    overflow-hidden flex flex-col transition hover:shadow-lg"
                                     >
-                                        <img
-                                            src={array.imagem}
-                                            alt=""
-                                            className="rounded-lg max-w-[33%]"
-                                        />
-                                        <strong className="lg:text-3xl">{array.nome}</strong>
-                                        <strong className="lg:text-3xl">{array.descricao}</strong>
-                                        <strong className="lg:text-3xl">R$ 13,90</strong>
-                                    </button>
+                                        <div className="h-52 flex items-center justify-center p-4">
+                                            <img
+                                                src={produto.imagem}
+                                                alt={produto.nome}
+                                                className="max-h-full object-contain"
+                                            />
+                                        </div>
+
+                                        <div className="flex flex-col gap-2 p-4 flex-1">
+                                            <h2 className="text-lg font-semibold">{produto.nome}</h2>
+
+                                            <p className="text-sm text-slate-600 line-clamp-2">{produto.descricao}</p>
+
+                                            <span
+                                                className={`text-sm font-medium ${
+                                                    produto.disponibilidade ? 'text-green-600' : 'text-red-500'
+                                                }`}
+                                            >
+                                                {produto.disponibilidade ? 'Disponível' : 'Indisponível'}
+                                            </span>
+
+                                            <span className="text-sm text-slate-500">Estoque: {produto.estoque}</span>
+
+                                            {/* <strong className="text-2xl mt-2">R$ {Number(produto.valor).toFixed(2)}</strong>*/}
+
+                                            <button
+                                                onClick={() => adicionarProduto(produto)}
+                                                disabled={!produto.disponibilidade}
+                                                className="mt-auto bg-blue-600 text-white py-2 rounded-lg
+                            hover:bg-blue-700 disabled:bg-slate-300
+                            disabled:cursor-not-allowed transition"
+                                            >
+                                                Adicionar ao carrinho
+                                            </button>
+                                        </div>
+                                    </div>
                                 ))}
                         </div>
                     ) : (

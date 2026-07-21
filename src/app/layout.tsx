@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import ContextProvider from "@/context/ContextProvider";
 //import { Inter, Geist } from "next/font/google";
 import { Inter } from 'next/font/google';
 import "./globals.css";
@@ -19,8 +20,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-br" className={cn("font-sans")}>
-      <body className={inter.className}>{children}</body>
-    </html>
+      <html lang="pt-br" className={cn('font-sans')}>
+          <body className={inter.className}>
+              <ContextProvider>{children}</ContextProvider>
+          </body>
+      </html>
   );
 }
