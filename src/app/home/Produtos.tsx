@@ -17,15 +17,15 @@ const Produtos = ({produtos} : {produtos: any}) => {
 
     return (
         <>
-            <div className="w-full h-full flex flex-col gap-8 lg:px-8">
-                <div className="flex lg:flex-row lg:justify-between flex-col lg:gap-0 gap-4 ">
+            <div className="w-[100vw] h-full flex flex-col gap-4 lg:px-8 mt-20 mb-20 2xl:w-[80vw]">
+                <div className="flex lg:flex-row lg:justify-between flex-col lg:gap-0 gap-4 p-4">
                     <select
                         defaultValue={''}
                         value={categoria || ''}
                         onChange={(e) => {
                             setCategoria(e.target.value == '' ? null : e.target.value);
                         }}
-                        className="lg:w-2/5 w-full p-4 rounded-md bg-gray-200"
+                        className=" w-full lg:w-[40vw] 2xl:w-1/5 p-4 rounded-md bg-gray-200"
                     >
                         <option value={''}>{!categoria ? 'Lista de categorias' : 'Voltar ao início'}</option>
                         <option value={'Mais Vendidos'}>Mais Vendidos</option>
@@ -33,7 +33,7 @@ const Produtos = ({produtos} : {produtos: any}) => {
                     </select>
 
                     <input
-                        className="bg-gray-200 lg:w-2/5 w-full outline-none border border-slate-300 p-4 rounded-md"
+                        className="bg-gray-200 w-full lg:w-[50vw] 2xl:w-1/5 outline-none border border-slate-300 p-4 rounded-md"
                         type="search"
                         placeholder="Pesquisar produtos..."
                         onFocus={() => {
@@ -43,18 +43,20 @@ const Produtos = ({produtos} : {produtos: any}) => {
                 </div>
 
                 <div className="flex flex-wrap flex-col w-full h-full gap-4 pt-8">
-                    <h1 className="font-black text-3xl w-full text-center lg:text-left">{categoria ? categoria : 'Categorias'}</h1>
+                    <h1 className="font-black text-3xl w-full text-center lg:text-left">
+                        {categoria ? categoria : 'Categorias'}
+                    </h1>
                     {categoria != null ? (
                         <div
                             className="w-full h-full p-4
-            grid lg:grid-cols-4 gap-4"
+                            grid lg:grid-cols-4 gap-4"
                         >
                             {Array.isArray(produtoFiltrado) &&
                                 produtoFiltrado.map((produto: Produtos) => (
                                     <div
                                         key={produto.id}
-                                        className="border border-slate-300 rounded-xl bg-white shadow-sm
-                    overflow-hidden flex flex-col transition hover:shadow-lg"
+                                        className="border border-slate-300 rounded-xl bg-white shadow-sm max-h-[400px]
+                                        overflow-hidden flex flex-col transition hover:shadow-lg"
                                     >
                                         <div className="h-52 flex items-center justify-center p-4">
                                             <img

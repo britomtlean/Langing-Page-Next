@@ -8,10 +8,10 @@ export default function Carrinho() {
 
     return (
         <aside
-            className="lg:min-h-[50vh] h-[10vh] lg:w-full w-[90vw] flex-1 overflow-hidden
-            p-4 lg:pt-8 bg-blue-800 border border-slate-300
-            lg:mt-8 text-white rounded-lg lg:relative fixed
-            bottom-[1%] flex flex-col"
+            className="h-[10vh] w-[95%] p-4 bottom-[1%] overflow-hidden border border-black
+            bg-blue-800 border border-slate-300 text-white rounded-lg
+            flex flex-col fixed
+            lg:h-full lg:w-[25%] 2xl:w-1/5 lg:relative lg:mt-8 lg:pt-8"
         >
             <h2 className="text-2xl font-bold mb-4 text-center">Carrinho</h2>
 
