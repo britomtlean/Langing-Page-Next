@@ -4,9 +4,14 @@ import { Produtos } from '@prisma/client';
 import { createContext, useContext, useState } from 'react';
 import type { PropsWithChildren } from 'react'; //TIPAGEM DE PROP
 
+type CarrinhoItem = Produtos & {
+    quantidade: number;
+    valorTotal: number
+};
+
 export type ContextType = {
-    carrinho: Array<Produtos>;
-    adicionarProduto: (produto: Produtos) => void;
+    carrinho: Array<CarrinhoItem>;
+    adicionarProduto: (produto: CarrinhoItem) => void;
     removerProduto: (id: string) => void;
 };
 
@@ -16,10 +21,32 @@ export const Context: React.Context<ContextType | null> = createContext<ContextT
 
 export const ContextProvider = ({ children }: PropsWithChildren) => {
 
-    const [carrinho, setCarrinho] = useState<Array<Produtos>>([]);
+    const [carrinho, setCarrinho] = useState<Array<CarrinhoItem>>([]);
 
-      function adicionarProduto(produto: Produtos) {
-          setCarrinho((prev) => [...prev, produto]);
+      function adicionarProduto(produto: CarrinhoItem) {
+
+
+          setCarrinho((prev) => {
+
+              const produtoExiste = prev.some((array) => array.id == produto.id);
+              if (!produtoExiste) return [
+                  ...prev,
+                  {
+                      ...produto,
+                      quantidade: 1,
+                      valorTotal: 10 * 1
+                  },
+              ];
+
+              return prev.map((array) => {
+
+                  if (array.id == produto.id) {
+                      return { ...array, quantidade: array.quantidade + 1, valorTotal: 10 * (array.quantidade  + 1)};
+                  }
+
+                  return array;
+              });
+          });
       }
 
       function removerProduto(id: string) {

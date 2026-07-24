@@ -1,10 +1,10 @@
 'use client';
 
-import { useCarrinho } from "@/context/ContextProvider";
+import { useCarrinho } from '@/context/ContextProvider';
+import Link from 'next/link';
 
 export default function Carrinho() {
-
-    const { carrinho, removerProduto } = useCarrinho();
+    const { carrinho, removerProduto, adicionarProduto } = useCarrinho();
 
     return (
         <aside
@@ -37,22 +37,63 @@ export default function Carrinho() {
 
                                     <p className="text-sm text-slate-600">{produto.descricao}</p>
 
+                                    <p>Quantidade: {produto.quantidade}</p>
+                                    <p>
+                                        SubTotal:{' '}
+                                        {produto.valorTotal.toLocaleString('pt-BR', {
+                                            style: 'currency',
+                                            currency: 'BRL',
+                                        })}
+                                    </p>
+
                                     {/** <p className="font-bold">R$ {produto.valor?.toString()}</p> */}
                                 </div>
 
-                                <button
-                                    onClick={() => removerProduto(produto.id)}
-                                    className="bg-red-600 px-3 py-2 rounded
+                                <div className='flex flex-col gap-4'>
+                                    {' '}
+                                    <button
+                                        onClick={() => adicionarProduto(produto)}
+                                        className="bg-green-600 px-3 py-2 rounded
+                                    text-white hover:bg-green-700"
+                                    >
+                                        +
+                                    </button>
+                                    <button
+                                        onClick={() => removerProduto(produto.id)}
+                                        className="bg-red-600 px-3 py-2 rounded
                                     text-white hover:bg-red-700"
-                                >
-                                    X
-                                </button>
+                                    >
+                                        X
+                                    </button>
+                                </div>
                             </div>
                         ))}
                     </div>
 
-                    <div className="mt-4 border-t border-blue-500 pt-4">
+                    <div className="mt-4 border-t border-blue-500 pt-4 flex flex-col justify-center items-center gap-4">
                         <strong>Itens: {carrinho.length}</strong>
+                        <Link
+                            className="
+                                inline-flex items-center justify-center gap-2
+                                w-full
+                                px-5 py-3
+                                rounded-lg
+                                bg-red-600
+                                text-white
+                                font-semibold
+                                shadow-md
+                                transition-all duration-200
+                                hover:bg-red-700
+                                hover:shadow-lg
+                                active:scale-95
+                                focus:outline-none
+                                focus:ring-2
+                                focus:ring-blue-400
+                                "
+                            href={'/home/carrinho'}
+                        >
+                            Ver carrinho
+                        </Link>
                     </div>
                 </>
             )}
