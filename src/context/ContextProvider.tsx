@@ -11,7 +11,7 @@ type CarrinhoItem = Produtos & {
 
 export type ContextType = {
     carrinho: Array<CarrinhoItem>;
-    adicionarProduto: (produto: CarrinhoItem) => void;
+    adicionarProduto: (produto: Produtos) => void;
     removerProduto: (id: string) => void;
 };
 
@@ -23,7 +23,7 @@ export const ContextProvider = ({ children }: PropsWithChildren) => {
 
     const [carrinho, setCarrinho] = useState<Array<CarrinhoItem>>([]);
 
-      function adicionarProduto(produto: CarrinhoItem) {
+      function adicionarProduto(produto: Produtos) {
 
 
           setCarrinho((prev) => {
