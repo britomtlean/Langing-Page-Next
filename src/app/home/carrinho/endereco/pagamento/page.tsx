@@ -23,6 +23,7 @@ const Page = () => {
                     <ArrowBigLeft />
                     <strong>Retornar</strong>
                 </Link>
+                
 
                 <h2 className="text-3xl font-bold text-black">Forma de Pagamento</h2>
             </div>
