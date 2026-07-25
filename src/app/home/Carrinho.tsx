@@ -8,15 +8,15 @@ export default function Carrinho() {
 
     return (
         <aside
-            className="h-[10vh] w-[95%] p-4 bottom-[1%] overflow-hidden border border-black
+            className="h-[10vh] w-[95%] p-4 bottom-[1%] overflow-hidden
             bg-blue-800 border border-slate-300 text-white rounded-lg
             flex flex-col fixed
-            lg:h-full lg:w-[25%] 2xl:w-1/5 lg:relative lg:mt-8 lg:pt-8"
+            lg:h-full lg:w-[25%] 2xl:w-1/5 lg:relative lg:pt-8 z-50"
         >
             <h2 className="text-2xl font-bold mb-4 text-center">Carrinho</h2>
 
             {carrinho.length === 0 ? (
-                <h1 className="bg-slate-500 p-5 rounded-lg text-center ">Carrinho vazio</h1>
+                <h1 className="bg-slate-400 p-5 rounded-lg text-center ">Carrinho vazio</h1>
             ) : (
                 <>
                     <div className="flex flex-col gap-3 overflow-y-auto flex-1">
@@ -59,7 +59,7 @@ export default function Carrinho() {
                                         +
                                     </button>
                                     <button
-                                        onClick={() => removerProduto(produto.id)}
+                                        onClick={() => removerProduto(produto)}
                                         className="bg-red-600 px-3 py-2 rounded
                                     text-white hover:bg-red-700"
                                     >

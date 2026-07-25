@@ -8,7 +8,7 @@ import { useCarrinho } from '@/context/ContextProvider';
 
 const Produtos = ({produtos} : {produtos: any}) => {
 
-    const { adicionarProduto } = useCarrinho();
+    const { incluirProduto } = useCarrinho();
 
     const [categoria, setCategoria] = useState<string | null>(null);
 
@@ -17,7 +17,7 @@ const Produtos = ({produtos} : {produtos: any}) => {
 
     return (
         <>
-            <div className="w-[100vw] h-full flex flex-col gap-4 lg:px-8 mt-20 mb-20 2xl:w-[80vw]">
+            <div className="w-[100vw] h-full flex flex-col lg:px-5 mb-20 2xl:w-[80vw]">
                 <div className="flex lg:flex-row lg:justify-between flex-col lg:gap-0 gap-4 p-4">
                     <select
                         defaultValue={''}
@@ -25,7 +25,7 @@ const Produtos = ({produtos} : {produtos: any}) => {
                         onChange={(e) => {
                             setCategoria(e.target.value == '' ? null : e.target.value);
                         }}
-                        className=" w-full lg:w-[40vw] 2xl:w-1/5 p-4 rounded-md bg-gray-200"
+                        className=" w-full lg:w-[40vw] 2xl:w-2/6 p-4 rounded-md bg-gray-200"
                     >
                         <option value={''}>{!categoria ? 'Lista de categorias' : 'Voltar ao início'}</option>
                         <option value={'Mais Vendidos'}>Mais Vendidos</option>
@@ -33,7 +33,7 @@ const Produtos = ({produtos} : {produtos: any}) => {
                     </select>
 
                     <input
-                        className="bg-gray-200 w-full lg:w-[50vw] 2xl:w-1/5 outline-none border border-slate-300 p-4 rounded-md"
+                        className="bg-gray-200 w-full lg:w-[50vw] 2xl:w-2/6 outline-none border border-slate-300 p-4 rounded-md"
                         type="search"
                         placeholder="Pesquisar produtos..."
                         onFocus={() => {
@@ -84,7 +84,7 @@ const Produtos = ({produtos} : {produtos: any}) => {
                                             {/* <strong className="text-2xl mt-2">R$ {Number(produto.valor).toFixed(2)}</strong>*/}
 
                                             <button
-                                                onClick={() => adicionarProduto(produto)}
+                                                onClick={() => incluirProduto(produto)}
                                                 disabled={!produto.disponibilidade}
                                                 className="mt-auto bg-blue-600 text-white py-2 rounded-lg
                             hover:bg-blue-700 disabled:bg-slate-300
