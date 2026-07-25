@@ -62,20 +62,18 @@ const Page = async () => {
                         </div>
                     </div>
 
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore maiores harum, dolore tenetur
-                        nihil ullam asperiores repellat enim ipsum, suscipit dicta explicabo sed, necessitatibus
-                        exercitationem quam accusamus veniam vel quisquam?
-                    </p>
+                    <h2 className='font-medium px-30 w-full text-center font-sans'>
+                        Há mais de 30 anos oferecendo materiais de construção, ferramentas, tintas, elétrica, hidráulica
+                        e muito mais. Atendimento rápido, estoque completo e entrega para a região.
+                    </h2>
 
-                    <div className="w-full block bg-sky-600/90 h-[200px] rounded-lg"></div>
+                    <div className="w-full block bg-slate-500 h-[200px] rounded-lg"></div>
                 </main>
 
                 <Carrinho />
             </div>
 
             <Produtos produtos={produtos} />
-
         </div>
     );
 };
