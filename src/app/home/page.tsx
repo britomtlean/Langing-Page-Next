@@ -3,26 +3,22 @@ export const dynamic = 'force-dynamic';
 import Image from 'next/image';
 import Produtos from './Produtos';
 import prisma from '../_db/prisma';
-import Link from 'next/link';
 import { MdPlace } from 'react-icons/md';
 import { MdAccessTimeFilled } from 'react-icons/md';
 import { IoLogoWhatsapp } from 'react-icons/io';
 import Carrinho from './Carrinho';
-import { MenuIcon } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { buttonVariants } from '@/components/ui/button';
 
 const Page = async () => {
     const produtos = await prisma.produtos.findMany();
 
     return (
         <div
-            className="w-full min-h-screen bg-slate-100 gap-10
-      flex flex-col justify-start items-center"
+            className="w-full min-h-screen gap-4
+            flex flex-col justify-start items-center"
         >
             <div
-                className="w-full lg:w-[90%] 2xl:w-[80%] lg:h-[60vh]
-            flex flex-col lg:flex-row items-center lg:items-start gap-4 p-5"
+                className="w-full lg:w-[95%] 2xl:w-[80%] lg:min-h-[60vh] lg:max-h-[100vh]
+                flex flex-col lg:flex-row items-center lg:items-start gap-4 py-5"
             >
                 <main className="w-[95%] lg:w-[75%] 2xl:w-4/5 flex flex-wrap flex-col gap-8">
                     <div
@@ -62,12 +58,12 @@ const Page = async () => {
                         </div>
                     </div>
 
-                    <h2 className='font-medium px-30 w-full text-center font-sans'>
+                    <h2 className="font-normal px-30 w-full text-center font-sans text-xl">
                         Há mais de 30 anos oferecendo materiais de construção, ferramentas, tintas, elétrica, hidráulica
                         e muito mais. Atendimento rápido, estoque completo e entrega para a região.
                     </h2>
 
-                    <div className="w-full block bg-slate-500 h-[200px] rounded-lg"></div>
+                    <div className="w-full block bg-slate-500 h-[250px] rounded-lg"></div>
                 </main>
 
                 <Carrinho />

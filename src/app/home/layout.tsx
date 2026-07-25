@@ -26,16 +26,16 @@ export default function RootLayout({
       <html lang="pt-br" className={cn('font-sans')}>
           <body className={inter.className}>
               <header
-                  className="w-full h-[12vh] bg-blue-800 relative pt-[1%]
+                  className="w-full min-h-[15vh] bg-blue-800 relative pt-[3%]
                         flex justify-around lg:justify-center items-center lg:items-start"
               >
                   <h1 className="text-white text-xl font-sans font-bold lg:hidden">Faça o seu login</h1>
                   <Button className={`${'lg:hidden'}`}>Login</Button>
 
                   <nav
-                      className="w-1/2 h-1/2 hidden
+                      className="w-3/4 h-1/2 hidden
                                 text-white font-bold text-2xl
-                                lg:flex justify-around items-center"
+                                lg:flex justify-around items-center gap-8 xl:w-1/2"
                   >
                       <a href="/home">
                           <HomeIcon className="size-10" />
@@ -48,7 +48,9 @@ export default function RootLayout({
                       <a>Sobre</a>
                   </nav>
               </header>
-              <ContextProvider>{children}</ContextProvider>
+              <ContextProvider>
+                  <div className="lg:min-h-[100vh] bg-slate-100">{children}</div>
+              </ContextProvider>
               <footer className="bg-blue-900 text-white">
                   <div className="max-w-7xl mx-auto px-6 py-12 grid gap-10 md:grid-cols-3">
                       {/* Empresa */}

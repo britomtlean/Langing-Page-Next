@@ -1,9 +1,121 @@
+'use client'
 import React from 'react'
+import Carrinho from '../Carrinho'
+import { useCarrinho } from '@/context/ContextProvider'
+import { ArrowBigLeft, Backpack, ShoppingBagIcon, ShoppingCart } from 'lucide-react'
+import Link from 'next/link'
 
 const page = () => {
+
+  const { carrinho, removerProduto, adicionarProduto } = useCarrinho();
+
   return (
-    <div>page</div>
-  )
+      <div
+          className="h-[full] w-[full] p-5 overflow-hidden text-white rounded-lg
+            flex flex-col gap-10"
+      >
+          <div className="flex justify-center">
+              <Link className="text-black absolute left-20 bg-slate-300 p-4 rounded-lg flex gap-2" href={`/home`}>
+                  <ArrowBigLeft className="text-slate-600" /> <strong>Retornar</strong>
+              </Link>
+              <h2 className="text-3xl font-bold mb-4 text-center text-black">Reveja os detalhes do seu pedido</h2>
+          </div>
+
+          <div
+              className="min-h-[50%]
+            flex justify-center items-start gap-2 border-black"
+          >
+              {carrinho.length === 0 ? (
+                  <></>
+              ) : (
+                  <div className="w-1/3 h-full p-4 border border-y-slate-400">
+                      <div className="flex flex-col gap-3 overflow-y-auto flex-1 max-h-96">
+                          {carrinho.map((produto) => (
+                              <div
+                                  key={produto.id}
+                                  className="bg-slate-300 text-black rounded-lg p-3
+                                flex items-center gap-3"
+                              >
+                                  <img
+                                      src={produto.imagem}
+                                      alt={produto.nome}
+                                      className="w-16 h-16 object-contain rounded"
+                                  />
+
+                                  <div className="flex-1">
+                                      <h3 className="font-semibold">{produto.nome}</h3>
+
+                                      <p className="text-sm text-slate-800">{produto.descricao}</p>
+
+                                      <p>Quantidade: {produto.quantidade}</p>
+                                      <p>
+                                          SubTotal:{' '}
+                                          {produto.valorTotal.toLocaleString('pt-BR', {
+                                              style: 'currency',
+                                              currency: 'BRL',
+                                          })}
+                                      </p>
+
+                                      {/** <p className="font-bold">R$ {produto.valor?.toString()}</p> */}
+                                  </div>
+
+                                  <div className="flex flex-col gap-4">
+                                      {' '}
+                                      <button
+                                          onClick={() => adicionarProduto(produto)}
+                                          className="bg-green-600 px-3 py-2 rounded
+                                    text-white hover:bg-green-700"
+                                      >
+                                          +
+                                      </button>
+                                      <button
+                                          onClick={() => removerProduto(produto)}
+                                          className="bg-red-600 px-3 py-2 rounded
+                                    text-white hover:bg-red-700"
+                                      >
+                                          -
+                                      </button>
+                                  </div>
+                              </div>
+                          ))}
+                      </div>
+                  </div>
+              )}
+
+              <div
+                  className="w-2/3 bg-slate-300 p-4 border border-slate-400 rounded-lg pl-40
+              flex flex-col justify-center gap-4"
+              >
+                  <ShoppingCart className="size-96 text-slate-500" />
+              </div>
+          </div>
+
+          <div className="flex justify-center">
+                  <Link
+                      className="
+                                inline-flex items-center justify-center gap-2
+                                w-3/5
+                                px-5 py-5
+                                rounded-lg
+                                bg-red-600
+                                text-white
+                                font-semibold
+                                shadow-md
+                                transition-all duration-200
+                                hover:bg-red-700
+                                hover:shadow-lg
+                                active:scale-95
+                                focus:outline-none
+                                focus:ring-2
+                                focus:ring-blue-400
+                                "
+                      href={`/home/carrinho/endereco`}
+                  >
+                      Próximo
+                  </Link>
+          </div>
+      </div>
+  );
 }
 
 export default page

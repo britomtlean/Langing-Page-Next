@@ -11,7 +11,7 @@ export default function Carrinho() {
             className="h-[10vh] w-[95%] p-4 bottom-[1%] overflow-hidden
             bg-blue-800 border border-slate-300 text-white rounded-lg
             flex flex-col fixed
-            lg:h-full lg:w-[25%] 2xl:w-1/5 lg:relative lg:pt-8 z-50"
+            lg:h-full lg:max-h-[500px] lg:w-[25%] 2xl:w-1/5 lg:relative lg:pt-8 z-50"
         >
             <h2 className="text-2xl font-bold mb-4 text-center">Carrinho</h2>
 
@@ -63,7 +63,7 @@ export default function Carrinho() {
                                         className="bg-red-600 px-3 py-2 rounded
                                     text-white hover:bg-red-700"
                                     >
-                                        X
+                                        -
                                     </button>
                                 </div>
                             </div>
