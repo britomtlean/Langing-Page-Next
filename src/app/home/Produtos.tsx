@@ -5,15 +5,12 @@ import Image from 'next/image';
 import type { Produtos } from '@prisma/client';
 import { useCarrinho } from '@/context/ContextProvider';
 
-
-const Produtos = ({produtos} : {produtos: any}) => {
-
+const Produtos = ({ produtos }: { produtos: any }) => {
     const { incluirProduto } = useCarrinho();
 
     const [categoria, setCategoria] = useState<string | null>(null);
 
     const produtoFiltrado: Produtos = produtos.filter((array: any) => array.categoria == categoria);
-
 
     return (
         <>
@@ -87,8 +84,8 @@ const Produtos = ({produtos} : {produtos: any}) => {
                                                 onClick={() => incluirProduto(produto)}
                                                 disabled={!produto.disponibilidade}
                                                 className="mt-auto bg-blue-600 text-white py-4 rounded-lg
-                            hover:bg-blue-700 disabled:bg-slate-300
-                            disabled:cursor-not-allowed transition"
+                                                hover:bg-blue-700 disabled:bg-slate-300
+                                                disabled:cursor-not-allowed transition"
                                             >
                                                 Adicionar ao carrinho
                                             </button>

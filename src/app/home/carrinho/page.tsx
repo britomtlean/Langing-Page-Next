@@ -1,13 +1,12 @@
 'use client'
 import React from 'react'
-import Carrinho from '../Carrinho'
 import { useCarrinho } from '@/context/ContextProvider'
-import { ArrowBigLeft, Backpack, ShoppingBagIcon, ShoppingCart } from 'lucide-react'
+import { ArrowBigLeft, ShoppingCart } from 'lucide-react'
 import Link from 'next/link'
 
 const page = () => {
 
-  const { carrinho, removerProduto, adicionarProduto } = useCarrinho();
+  const { produtosCarrinho, incrementarProduto, decrementarProduto } = useCarrinho();
 
   return (
       <div
@@ -25,14 +24,14 @@ const page = () => {
               className="min-h-[50%]
             flex justify-center items-start gap-2 border-black"
           >
-              {carrinho.length === 0 ? (
+              {produtosCarrinho.length === 0 ? (
                   <></>
               ) : (
                   <div className="w-1/3 h-full p-4 border border-y-slate-400">
                       <div className="flex flex-col gap-3 overflow-y-auto flex-1 max-h-96">
-                          {carrinho.map((produto) => (
+                          {produtosCarrinho.map((produto) => (
                               <div
-                                  key={produto.id}
+                                  key={produto.produtoId}
                                   className="bg-slate-300 text-black rounded-lg p-3
                                 flex items-center gap-3"
                               >
@@ -45,12 +44,10 @@ const page = () => {
                                   <div className="flex-1">
                                       <h3 className="font-semibold">{produto.nome}</h3>
 
-                                      <p className="text-sm text-slate-800">{produto.descricao}</p>
-
                                       <p>Quantidade: {produto.quantidade}</p>
                                       <p>
                                           SubTotal:{' '}
-                                          {produto.valorTotal.toLocaleString('pt-BR', {
+                                          {produto.subtotal.toLocaleString('pt-BR', {
                                               style: 'currency',
                                               currency: 'BRL',
                                           })}
@@ -62,14 +59,14 @@ const page = () => {
                                   <div className="flex flex-col gap-4">
                                       {' '}
                                       <button
-                                          onClick={() => adicionarProduto(produto)}
+                                          onClick={() => incrementarProduto(produto)}
                                           className="bg-green-600 px-3 py-2 rounded
                                     text-white hover:bg-green-700"
                                       >
                                           +
                                       </button>
                                       <button
-                                          onClick={() => removerProduto(produto)}
+                                          onClick={() => decrementarProduto(produto)}
                                           className="bg-red-600 px-3 py-2 rounded
                                     text-white hover:bg-red-700"
                                       >
@@ -83,16 +80,16 @@ const page = () => {
               )}
 
               <div
-                  className="w-2/3 bg-slate-300 p-4 border border-slate-400 rounded-lg pl-40
+                  className="w-1/3 h-full min-h-96 bg-slate-300 p-4 border border-slate-400 rounded-lg pl-20 pr-20
               flex flex-col justify-center gap-4"
               >
-                  <ShoppingCart className="size-96 text-slate-500" />
+                  <ShoppingCart className="size-full text-slate-500" />
               </div>
           </div>
 
           <div className="flex justify-center">
-                  <Link
-                      className="
+              <Link
+                  className="
                                 inline-flex items-center justify-center gap-2
                                 w-3/5
                                 px-5 py-5
@@ -109,10 +106,10 @@ const page = () => {
                                 focus:ring-2
                                 focus:ring-blue-400
                                 "
-                      href={`/home/carrinho/endereco`}
-                  >
-                      Próximo
-                  </Link>
+                  href={`/home/carrinho/endereco`}
+              >
+                  Próximo
+              </Link>
           </div>
       </div>
   );

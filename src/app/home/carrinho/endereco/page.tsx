@@ -1,13 +1,18 @@
 'use client';
 
 import { ArrowBigLeft, MapPinned } from 'lucide-react';
+import { useCarrinho } from '@/context/ContextProvider';
 import Link from 'next/link';
 import { useState } from 'react';
 
 const Page = () => {
 
+    const { adicionarCarrinho } = useCarrinho();
+
     const [endereco, setEndereco] = useState({
         cep: '',
+        nome: '',
+        contato: '',
         rua: '',
         bairro: '',
         cidade: '',
@@ -83,6 +88,36 @@ const Page = () => {
                     <form className="flex flex-col gap-5">
                         {/* CEP */}
                         <div className="grid grid-cols-4 gap-4">
+                            <div>
+                                <label className="font-semibold text-black">Nome</label>
+                                <input
+                                    type="text"
+                                    placeholder="Digite o seu nome"
+                                    className="w-full mt-2 p-3 rounded-lg border border-slate-400"
+                                    value={endereco.nome}
+                                    onChange={(e) =>
+                                        setEndereco({
+                                            ...endereco,
+                                            nome: e.target.value,
+                                        })
+                                    }
+                                />
+                            </div>
+                            <div>
+                                <label className="font-semibold text-black">Contato</label>
+                                <input
+                                    type="tel"
+                                    placeholder="Digite o seu WhatsApp"
+                                    className="w-full mt-2 p-3 rounded-lg border border-slate-400"
+                                    value={endereco.contato}
+                                    onChange={(e) =>
+                                        setEndereco({
+                                            ...endereco,
+                                            contato: e.target.value,
+                                        })
+                                    }
+                                />
+                            </div>
                             <div className="col-span-1">
                                 <label className="font-semibold text-black">CEP</label>
 
@@ -224,8 +259,8 @@ const Page = () => {
 
             {/* Rodapé */}
             <div className="flex justify-center">
-                <Link
-                    href={`/home/carrinho/endereco/pagamento`}
+                <button
+                    onClick={() => {adicionarCarrinho(endereco.nome, endereco.contato, endereco.rua)}}
                     className="
                     flex justify-center
                         w-3/5
@@ -239,7 +274,7 @@ const Page = () => {
                     "
                 >
                     Continuar para Pagamento
-                </Link>
+                </button>
             </div>
         </div>
     );

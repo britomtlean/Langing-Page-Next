@@ -66,7 +66,7 @@ const Page = async () => {
                     <div className="w-full block bg-slate-500 h-[250px] rounded-lg"></div>
                 </main>
 
-                <Carrinho />
+                <Carrinho/>
             </div>
 
             <Produtos produtos={produtos} />

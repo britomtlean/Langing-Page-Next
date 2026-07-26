@@ -1,19 +1,27 @@
 'use client';
 
+import { Produto } from '@/Types/Types';
 import { Produtos } from '@prisma/client';
+import { useRouter } from 'next/navigation';
 import { createContext, useContext, useState } from 'react';
 import type { PropsWithChildren } from 'react'; //TIPAGEM DE PROP
 
-type CarrinhoItem = Produtos & {
-    quantidade: number;
+type Carrinho = {
+    nomeCliente: string | null;
+    contatoCliente: string | null;
+    enderecoCliente: string | null;
+    produtos: Produto[] | null;
     valorTotal: number;
+
 };
 
 export type ContextType = {
-    carrinho: Array<CarrinhoItem>;
+    produtosCarrinho: Array<Produto>;
     incluirProduto: (produto: Produtos) => void;
-    adicionarProduto: (produto: Produtos) => void;
-    removerProduto: (id: Produtos) => void;
+    incrementarProduto: (produto: Produto) => void;
+    decrementarProduto: (id: Produto) => void;
+    carrinho: Carrinho | null;
+    adicionarCarrinho: (nome: string, contato: string, endereco: string) => void;
 };
 
 export const Context: React.Context<ContextType | null> = createContext<ContextType | null>(null);
@@ -21,21 +29,53 @@ export const Context: React.Context<ContextType | null> = createContext<ContextT
 /************************************************************************************** */
 
 export const ContextProvider = ({ children }: PropsWithChildren) => {
-    const [carrinho, setCarrinho] = useState<Array<CarrinhoItem>>([]);
+
+    const navigate = useRouter();
+
+    const [produtosCarrinho, setProdutosCarrinho] = useState<Array<Produto>>([]);
+    const [carrinho, setCarrinho] = useState<Carrinho | null>(null);
+
+    function adicionarCarrinho(nome : string, contato: string, endereco: string) {
+
+        const carrinho: Carrinho = {
+            nomeCliente: nome,
+            contatoCliente: contato,
+            enderecoCliente: endereco,
+            produtos: produtosCarrinho,
+            valorTotal: produtosCarrinho.reduce((acc, produto) => {return produto.subtotal + acc},0)
+        }
+
+        setCarrinho(carrinho);
+
+
+        navigate.push('/home/carrinho/endereco/pagamento');
+
+
+    }
 
     function incluirProduto(produto: Produtos) {
+
+
+            const quantidade = 1;
+            const valorUnitario = 10.00;
+
+            const produtoConvertido: Produto = {
+                produtoId: produto.id,
+                nome: produto.nome,
+                imagem: produto.imagem,
+                quantidade: quantidade,
+                valorUnitario: valorUnitario,
+                subtotal: quantidade * quantidade
+            }
+
         try {
-            const produtoExiste = carrinho.some((array) => array.id == produto.id);
+            const produtoExiste = produtosCarrinho.some((array) => array.produtoId == produto.id);
             if (produtoExiste) throw new Error('Produto já incluso no carrinho');
 
-            setCarrinho((prev) => {
+            setProdutosCarrinho((prev: Produto[]) => {
                 return [
                     ...prev,
-                    {
-                        ...produto,
-                        quantidade: 1,
-                        valorTotal: 10 * 1,
-                    },
+                    produtoConvertido
                 ];
             });
         } catch (error: unknown) {
@@ -47,22 +87,33 @@ export const ContextProvider = ({ children }: PropsWithChildren) => {
         }
     }
 
-    function adicionarProduto(produto: Produtos) {
-        setCarrinho((prev) => {
-            const produtoExiste = prev.some((array) => array.id == produto.id);
+    function incrementarProduto(produto: Produto) {
+
+        const quantidade = 1;
+        const valorUnitario = 10.0;
+
+        const produtoConvertido: Produto = {
+            produtoId: produto.produtoId,
+            nome: produto.nome,
+            quantidade: quantidade,
+            valorUnitario: valorUnitario,
+            subtotal: quantidade * quantidade,
+        };
+
+
+        setProdutosCarrinho((prev: Produto[]) => {
+
+            const produtoExiste = prev.some((array) => array.produtoId == produto.produtoId);
+
             if (!produtoExiste)
                 return [
                     ...prev,
-                    {
-                        ...produto,
-                        quantidade: 1,
-                        valorTotal: 10 * 1,
-                    },
+                    produtoConvertido
                 ];
 
             return prev.map((array) => {
-                if (array.id == produto.id) {
-                    return { ...array, quantidade: array.quantidade + 1, valorTotal: 10 * (array.quantidade + 1) };
+                if (array.produtoId == produto.produtoId) {
+                    return { ...array, quantidade: array.quantidade + 1, subtotal: (array.quantidade + 1) * array.valorUnitario };
                 }
 
                 return array;
@@ -70,24 +121,22 @@ export const ContextProvider = ({ children }: PropsWithChildren) => {
         });
     }
 
-    function removerProduto(produto: Produtos) {
+    function decrementarProduto(produto: Produto) {
 
-        setCarrinho((prev) => {
+        setProdutosCarrinho((prev) => {
 
-            const igualAUm = prev.some((array) => array.quantidade === 1);
-            if (igualAUm)
-            {
-                const novaLista = prev.filter((array) => array.id !== produto.id);
+            const produtoExiste = prev.some((array) => array.produtoId == produto.produtoId && array.quantidade === 1);
+            if (produtoExiste) {
+                const novaLista = prev.filter((array) => array.produtoId !== produto.produtoId);
                 return novaLista;
             }
 
-
             return prev.map((array) => {
-                if (array.id == produto.id) {
+                if (array.produtoId == produto.produtoId) {
                     return {
                         ...array,
                         quantidade: array.quantidade - 1,
-                        valorTotal: 10 * (array.quantidade - 1),
+                        subtotal: array.valorUnitario * (array.quantidade -1 ) ,
                     };
                 }
 
@@ -97,7 +146,16 @@ export const ContextProvider = ({ children }: PropsWithChildren) => {
     }
 
     return (
-        <Context.Provider value={{ carrinho, incluirProduto, adicionarProduto, removerProduto }}>
+        <Context.Provider
+            value={{
+                produtosCarrinho,
+                incluirProduto,
+                incrementarProduto,
+                decrementarProduto,
+                adicionarCarrinho,
+                carrinho,
+            }}
+        >
             {children}
         </Context.Provider>
     );

@@ -1,9 +1,28 @@
 'use client';
 
 import { ArrowBigLeft, CreditCard, QrCode, Banknote, ReceiptText } from 'lucide-react';
+import { useCarrinho } from '@/context/ContextProvider';
 import Link from 'next/link';
 
 const Page = () => {
+
+    const { carrinho } = useCarrinho();
+
+        async function pagamento(pedido: any) {
+
+            const res = await fetch('https://dotnet-webapi-base-production.up.railway.app/api/payment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(pedido),
+            });
+
+            const data = await res.json();
+            console.log(data);
+            if (!res.ok) return;
+            window.location.href = data.url;
+        }
+
+
     return (
         <div className="h-full w-full p-5 flex flex-col gap-10 ">
             {/* Cabeçalho */}
@@ -23,7 +42,6 @@ const Page = () => {
                     <ArrowBigLeft />
                     <strong>Retornar</strong>
                 </Link>
-                
 
                 <h2 className="text-3xl font-bold text-black">Forma de Pagamento</h2>
             </div>
@@ -33,7 +51,7 @@ const Page = () => {
                 {/* Métodos */}
                 <section
                     className="
-                        w-2/3
+                        w-1/3
                         bg-slate-300
                         rounded-lg
                         border
@@ -155,12 +173,17 @@ const Page = () => {
                         <div className="space-y-3 text-black">
                             <div className="flex justify-between">
                                 <span>Produtos</span>
-                                <span>R$ 129,90</span>
+                                <span>
+                                    {carrinho?.valorTotal.toLocaleString('pt-BR', {
+                                        style: 'currency',
+                                        currency: 'BRL',
+                                    }) || (0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                                </span>
                             </div>
 
                             <div className="flex justify-between">
                                 <span>Entrega</span>
-                                <span>R$ 8,00</span>
+                                <span>{(10).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
                             </div>
 
                             <hr />
@@ -174,7 +197,12 @@ const Page = () => {
                                 "
                             >
                                 <span>Total</span>
-                                <span>R$ 137,90</span>
+                                <span>
+                                    {((carrinho?.valorTotal || 0) + 10).toLocaleString('pt-BR', {
+                                        style: 'currency',
+                                        currency: 'BRL',
+                                    })}
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -191,10 +219,115 @@ const Page = () => {
                             hover:bg-red-700
                             transition
                         "
+
+                        onClick={() => {pagamento(carrinho)}}
                     >
                         Finalizar Pedido
                     </button>
                 </aside>
+
+                <div
+                    className="
+                        w-1/3 flex-1 space-y-4
+                        bg-slate-300
+                        rounded-lg
+                        border
+                        border-slate-400
+                        p-8
+                    "
+                >
+                    <h1 className="text-2xl font-bold text-black mb-8">Dados do pedido</h1>
+                    <label
+                        className="
+                                flex
+                                items-center
+                                gap-5
+                                p-5
+                                bg-white
+                                rounded-lg
+                                border
+                                cursor-pointer
+                                hover:border-red-600
+                            "
+                    >
+                        <strong>Destinário:</strong> {carrinho?.nomeCliente}
+                    </label>
+                    <label
+                        className="
+                                flex
+                                items-center
+                                gap-5
+                                p-5
+                                bg-white
+                                rounded-lg
+                                border
+                                cursor-pointer
+                                hover:border-red-600
+                            "
+                    >
+                        <strong>Contato:</strong> {carrinho?.contatoCliente}
+                    </label>
+                    <label
+                        className="
+                                flex
+                                items-center
+                                gap-5
+                                p-5
+                                bg-white
+                                rounded-lg
+                                border
+                                cursor-pointer
+                                hover:border-red-600
+                            "
+                    >
+                        <strong>Endereço:</strong> {carrinho?.enderecoCliente}
+                    </label>
+                </div>
+            </div>
+
+            <div
+                className="h-full w-1/2  bg-slate-300 rounded-lg border border-slate-400 p-8
+            flex flex-col items-start gap-4"
+            >
+                <h2 className="text-3xl font-bold text-black">Produtos</h2>
+                {carrinho?.produtos == null ? (
+                    <div className="w-full h-full py-8 border text-center rounded-lg">
+                        <h1 className="w-full">Carrinho vazio</h1>
+                    </div>
+                ) : (
+                    <div className="w-full h-full p-4 border border-y-slate-400 ">
+                        <div className="flex flex-col gap-3 overflow-y-auto flex-1 max-h-[250px]">
+                            {carrinho?.produtos?.map((produto) => (
+                                <div
+                                    key={produto.produtoId}
+                                    className="bg-slate-300 text-black rounded-lg p-3 border-b border-r border-slate-400
+                                flex items-center gap-3"
+                                >
+                                    <img
+                                        src={produto.imagem}
+                                        alt={produto.nome}
+                                        className="w-16 h-16 object-contain rounded"
+                                    />
+
+                                    <div className="flex-1">
+                                        <h3 className="font-semibold">{produto.nome}</h3>
+
+                                        <p>Quantidade: {produto.quantidade}</p>
+                                        <p>
+                                            SubTotal:{' '}
+                                            {produto.subtotal.toLocaleString('pt-BR', {
+                                                style: 'currency',
+                                                currency: 'BRL',
+                                            })}
+                                        </p>
+
+                                        {/** <p className="font-bold">R$ {produto.valor?.toString()}</p> */}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );
