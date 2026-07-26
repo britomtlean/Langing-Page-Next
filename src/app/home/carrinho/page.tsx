@@ -4,7 +4,7 @@ import { useCarrinho } from '@/context/ContextProvider'
 import { ArrowBigLeft, ShoppingCart } from 'lucide-react'
 import Link from 'next/link'
 
-const page = () => {
+const Page = () => {
 
   const { produtosCarrinho, incrementarProduto, decrementarProduto } = useCarrinho();
 
@@ -115,4 +115,4 @@ const page = () => {
   );
 }
 
-export default page
+export default Page
