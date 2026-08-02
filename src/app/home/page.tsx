@@ -7,6 +7,7 @@ import { MdPlace } from 'react-icons/md';
 import { MdAccessTimeFilled } from 'react-icons/md';
 import { IoLogoWhatsapp } from 'react-icons/io';
 import Carrinho from './Carrinho';
+import Carrosel from './Carrosel';
 
 const Page = async () => {
     const produtos = await prisma.produtos.findMany();
@@ -17,10 +18,10 @@ const Page = async () => {
             flex flex-col justify-start items-center"
         >
             <div
-                className="w-full lg:w-[95%] 2xl:w-[80%] lg:min-h-[60vh] lg:max-h-[100vh]
+                className="w-full lg:w-[95%] 2xl:w-[80%] lg:h-[40vh] lg:max-h-[100vh]
                 flex flex-col lg:flex-row items-center lg:items-start gap-4 py-5"
             >
-                <main className="w-[95%] lg:w-[75%] 2xl:w-4/5 flex flex-wrap flex-col gap-8">
+                <main className="w-[95%] lg:w-[75%] 2xl:w-4/5 flex flex-wrap flex-col gap-8 p-4">
                     <div
                         className="hidden lg:flex lg:flex-row justify-center lg:justify-center items-center gap-10
                         bg-slate-300 rounded-lg p-4 px-8 border border-slate-200"
@@ -57,16 +58,21 @@ const Page = async () => {
                             <img src="/logo.jpg" className="w-[220px] rounded-lg" />
                         </div>
                     </div>
-
-                    <h2 className="font-normal px-30 w-full text-center font-sans text-xl">
-                        Há mais de 30 anos oferecendo materiais de construção, ferramentas, tintas, elétrica, hidráulica
-                        e muito mais. Atendimento rápido, estoque completo e entrega para a região.
-                    </h2>
-
-                    <div className="w-full block bg-slate-500 h-[250px] rounded-lg"></div>
                 </main>
 
-                <Carrinho/>
+                <Carrinho />
+            </div>
+
+            <div>
+                <h2 className="font-black px-30 w-full text-center font-sans text-xl px-5">
+                    Há mais de 30 anos oferecendo materiais de construção, ferramentas, tintas, elétrica, hidráulica e
+                    muito mais. Atendimento rápido, estoque completo e entrega para a região.
+                </h2>
+            </div>
+
+            <div className="w-full lg:w-[95%] mt-8">
+                <h2 className="font-black px-30 w-full text-center font-sans text-4xl  px-2">Destaques</h2>
+                <Carrosel produtos={produtos} />
             </div>
 
             <Produtos produtos={produtos} />

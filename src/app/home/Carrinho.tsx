@@ -11,7 +11,7 @@ export default function Carrinho() {
 
     return (
         <aside
-            className="h-[10vh] w-[95%] p-4 bottom-[1%] overflow-hidden
+            className="h-[full] w-[95%] p-4 bottom-[1%] overflow-hidden
             bg-blue-800 border border-slate-300 text-white rounded-lg
             flex flex-col fixed
             lg:h-full lg:max-h-[500px] lg:w-[25%] 2xl:w-1/5 lg:relative lg:pt-8 z-50"

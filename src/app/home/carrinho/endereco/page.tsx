@@ -7,7 +7,7 @@ import { useState } from 'react';
 
 const Page = () => {
 
-    const { adicionarCarrinho } = useCarrinho();
+    const { adicionarCarrinho, produtosCarrinho } = useCarrinho();
 
     const [endereco, setEndereco] = useState({
         cep: '',
@@ -49,7 +49,11 @@ const Page = () => {
     };
 
 
-    return (
+    return produtosCarrinho.length == 0 ? (
+        <h1 className="font-bold w-full text-4xl text-center py-10 min-h-screen">
+            Carrinho vazio <br></br> <br></br> <strong className="p-4 text-6xl">{'=('}</strong>{' '}
+        </h1>
+    ) : (
         <div className="h-full w-full p-5 flex flex-col gap-10 ">
             {/* Cabeçalho */}
             <div className="flex justify-center relative">
@@ -260,7 +264,9 @@ const Page = () => {
             {/* Rodapé */}
             <div className="flex justify-center">
                 <button
-                    onClick={() => {adicionarCarrinho(endereco.nome, endereco.contato, endereco.rua)}}
+                    onClick={() => {
+                        adicionarCarrinho(endereco.nome, endereco.contato, endereco.rua);
+                    }}
                     className="
                     flex justify-center
                         w-3/5

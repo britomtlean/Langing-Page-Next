@@ -3,27 +3,89 @@
 import { ArrowBigLeft, CreditCard, QrCode, Banknote, ReceiptText } from 'lucide-react';
 import { useCarrinho } from '@/context/ContextProvider';
 import Link from 'next/link';
+import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
+import { useEffect, useState } from 'react';
 
 const Page = () => {
-
     const { carrinho } = useCarrinho();
 
-        async function pagamento(pedido: any) {
+    const [modoPagamento, setModoPagamento] = useState<string | null>(null);
 
-            const res = await fetch('https://dotnet-webapi-base-production.up.railway.app/api/payment', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(pedido),
-            });
+    /////////////////////// SIGNALR \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+        const [connection, setConnection] = useState<HubConnection | null>(null);
 
-            const data = await res.json();
-            console.log(data);
-            if (!res.ok) return;
-            window.location.href = data.url;
+        useEffect(() => {
+            //INSTANCIA DE CONEXÃO
+            const newConnection = new HubConnectionBuilder()
+                .withUrl('https://dotnet-webapi-base-production.up.railway.app/chat')
+                .withAutomaticReconnect()
+                .build();
+
+            setConnection(newConnection);
+        }, []);
+
+        useEffect(() => {
+
+            if (!connection) return;
+
+            connection
+                .start()
+                .then(() => {
+                    console.log('✅ Conectado ao SignalR');
+                    connection.invoke('EntrarSala', `${carrinho?.contatoCliente}`);
+
+
+                    // ESCUTA MENSAGEM DO SERVIDOR
+                    connection.on('ReceiveMessage', (message: string) => {
+                        console.log('📩 Servidor - ', message);
+                        alert(JSON.stringify(message));
+                    });
+                })
+                .catch((err) => {
+                    console.error('Erro na conexão:', err);
+                });
+
+            return () => {
+                connection.stop();
+            };
+        }, [connection]);
+
+    ////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////// FUNCTIONS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    async function pagamento(pedido: any) {
+        const res = await fetch('https://dotnet-webapi-base-production.up.railway.app/api/payment', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(pedido),
+        });
+
+        const data = await res.json();
+        console.log(data);
+        if (!res.ok) return;
+        window.location.href = data.url;
+    }
+
+
+    async function pagamentoEntrega(pedido: any) {
+        if (!connection) return;
+
+        try {
+            await connection.invoke('CreatePedido', pedido);
+
+            console.log('✅ Pedido enviado: ', pedido);
+        } catch (err) {
+            console.error('Erro ao enviar:', err);
         }
+    }
 
+    ////////////////////////////////////////////////////////////////////////
 
-    return (
+    return !carrinho ? (
+        <h1 className="font-bold w-full text-4xl text-center py-10 min-h-screen">
+            Carrinho vazio <br></br> <br></br> <strong className="p-4 text-6xl">{'=('}</strong>{' '}
+        </h1>
+    ) : (
         <div className="h-full w-full p-5 flex flex-col gap-10 ">
             {/* Cabeçalho */}
             <div className="relative flex justify-center">
@@ -76,18 +138,25 @@ const Page = () => {
                                 hover:border-red-600
                             "
                         >
-                            <input type="radio" name="pagamento" value="cartao" />
+                            <input
+                                type="radio"
+                                name="pagamento"
+                                value="Online"
+                                onChange={(e) => {
+                                    setModoPagamento(e.target.value);
+                                }}
+                            />
 
                             <CreditCard className="text-blue-600" />
 
                             <div>
-                                <h4 className="font-semibold">Cartão de Crédito</h4>
+                                <h4 className="font-semibold">Pagar Online</h4>
 
                                 <p className="text-sm text-slate-600">Visa, MasterCard, Elo...</p>
                             </div>
                         </label>
 
-                        {/* Pix */}
+                        {/* ENTREGA */}
                         <label
                             className="
                                 flex
@@ -101,32 +170,14 @@ const Page = () => {
                                 hover:border-red-600
                             "
                         >
-                            <input type="radio" name="pagamento" value="pix" />
-
-                            <QrCode className="text-green-600" />
-
-                            <div>
-                                <h4 className="font-semibold">Pix</h4>
-
-                                <p className="text-sm text-slate-600">Aprovação imediata</p>
-                            </div>
-                        </label>
-
-                        {/* Dinheiro */}
-                        <label
-                            className="
-                                flex
-                                items-center
-                                gap-5
-                                p-5
-                                bg-white
-                                rounded-lg
-                                border
-                                cursor-pointer
-                                hover:border-red-600
-                            "
-                        >
-                            <input type="radio" name="pagamento" value="dinheiro" />
+                            <input
+                                type="radio"
+                                name="pagamento"
+                                value="Entrega"
+                                onChange={(e) => {
+                                    setModoPagamento(e.target.value);
+                                }}
+                            />
 
                             <Banknote className="text-emerald-600" />
 
@@ -207,8 +258,9 @@ const Page = () => {
                         </div>
                     </div>
 
-                    <button
-                        className="
+                    {modoPagamento == 'Online' ? (
+                        <button
+                            className="
                             w-full
                             mt-8
                             py-4
@@ -219,11 +271,34 @@ const Page = () => {
                             hover:bg-red-700
                             transition
                         "
-
-                        onClick={() => {pagamento(carrinho)}}
-                    >
-                        Finalizar Pedido
-                    </button>
+                            onClick={() => {
+                                pagamento(carrinho);
+                            }}
+                        >
+                            Finalizar Pedido
+                        </button>
+                    ) : modoPagamento == 'Entrega' ? (
+                        <button
+                            className="
+                            w-full
+                            mt-8
+                            py-4
+                            rounded-lg
+                            bg-blue-600
+                            text-white
+                            font-semibold
+                            hover:bg-blue-700
+                            transition
+                        "
+                            onClick={() => {
+                                pagamentoEntrega(carrinho);
+                            }}
+                        >
+                            Finalizar Pedido
+                        </button>
+                    ) : (
+                        ''
+                    )}
                 </aside>
 
                 <div
@@ -331,6 +406,6 @@ const Page = () => {
             </div>
         </div>
     );
-};
+};;
 
 export default Page;
