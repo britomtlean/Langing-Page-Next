@@ -30,18 +30,18 @@ const Carrosel = ({produtos} : {produtos: any}) => {
            overflow-hidden rounded-lg
           md:min-h-[300px]"
       >
-          <button className="w-[12%] h-full border-l-0! rounded-r-[0]! bg-blue-900/40" onClick={returnProduct}>
+          <button className="md:w-[10%] h-full border-l-0! rounded-r-[0]! bg-blue-900/40" onClick={returnProduct}>
               <FaAngleLeft className="text-white text-4xl text-center w-full" />
           </button>
 
           <img
-              className="w-[90%] flex-2 max-h-[200px] overflow-hidden object-contain
+              className="md:w-[90%] flex-2 max-h-[200px] overflow-hidden object-contain
                   md:max-h-[200px]"
               src={item[0].imagem}
               alt=""
           />
 
-          <button className="w-[12%] h-full bg-green-900/40 border-r-0! rounded-l-[0]!" onClick={nextProduct}>
+          <button className="md:w-[10%] h-full bg-green-900/40 border-r-0! rounded-l-[0]!" onClick={nextProduct}>
               <FaAngleRight className="text-white text-4xl text-center w-full" />
           </button>
       </div>

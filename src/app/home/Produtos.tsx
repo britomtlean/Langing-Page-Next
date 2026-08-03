@@ -14,8 +14,11 @@ const Produtos = ({ produtos }: { produtos: any }) => {
 
     return (
         <>
-            <div className="w-[100vw] h-full flex flex-col lg:w-[95%] lg:px-5 mb-20 2xl:w-[80vw]">
-                <div className="flex lg:flex-row lg:justify-between flex-col lg:gap-0 gap-4 p-4">
+            <div className="w-[95%] h-full flex flex-col lg:w-[95%] mb-20 2xl:w-[80vw] gap-5 md:pt-8">
+                <h1 className="font-black font-sans text-4xl w-full text-center lg:text-center">
+                    {categoria ? categoria : 'Categorias'}
+                </h1>
+                <div className="flex lg:flex-row lg:justify-between flex-col lg:gap-0 gap-4 py-4">
                     <select
                         defaultValue={''}
                         value={categoria || ''}
@@ -29,23 +32,20 @@ const Produtos = ({ produtos }: { produtos: any }) => {
                         <option value={'Outros'}>Outros</option>
                     </select>
 
-                    <input
+                    {/*<input
                         className="bg-gray-300 w-full lg:w-[40vw] 2xl:w-2/6 outline-none border border-slate-300 p-4 rounded-md"
                         type="search"
                         placeholder="Pesquisar produtos..."
                         onFocus={() => {
                             '';
                         }}
-                    />
+                    />*/}
                 </div>
 
-                <div className="flex flex-wrap flex-col w-full h-full gap-4 pt-8">
-                    <h1 className="font-black text-3xl w-full text-center lg:text-left">
-                        {categoria ? categoria : 'Categorias'}
-                    </h1>
+                <div className="flex flex-wrap flex-col w-full h-full gap-4">
                     {categoria != null ? (
                         <div
-                            className="w-full h-full p-4
+                            className="w-full h-full
                             grid lg:grid-cols-4 gap-4"
                         >
                             {Array.isArray(produtoFiltrado) &&
@@ -95,7 +95,7 @@ const Produtos = ({ produtos }: { produtos: any }) => {
                         </div>
                     ) : (
                         <div
-                            className="w-full h-full p-4
+                            className="w-full h-full
                                 grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-2"
                         >
                             <button

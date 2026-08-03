@@ -18,10 +18,10 @@ const Page = async () => {
             flex flex-col justify-start items-center"
         >
             <div
-                className="w-full lg:w-[95%] 2xl:w-[80%] lg:h-[40vh] lg:max-h-[100vh]
+                className="w-full lg:w-[95%] 2xl:w-[80%] lg:h-[400px]
                 flex flex-col lg:flex-row items-center lg:items-start gap-4 py-5"
             >
-                <main className="w-[95%] lg:w-[75%] 2xl:w-4/5 flex flex-wrap flex-col gap-8 p-4">
+                <main className="w-[95%] lg:w-[75%] 2xl:w-4/5 flex flex-wrap flex-col gap-8 ">
                     <div
                         className="hidden lg:flex lg:flex-row justify-center lg:justify-center items-center gap-10
                         bg-slate-300 rounded-lg p-4 px-8 border border-slate-200"
@@ -58,20 +58,35 @@ const Page = async () => {
                             <img src="/logo.jpg" className="w-[220px] rounded-lg" />
                         </div>
                     </div>
+
+                    <div className="flex flex-row gap-2 w-full">
+                        <input
+                            type="search"
+                            placeholder="Pesquisar produto..."
+                            className="flex-1 p-3 rounded-lg border border-slate-400 outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+
+                        <button
+                            type="button"
+                            className="px-5 py-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
+                        >
+                            Pesquisar
+                        </button>
+                    </div>
                 </main>
 
                 <Carrinho />
             </div>
 
-            <div>
-                <h2 className="font-black px-30 w-full text-center font-sans text-xl px-5">
+            <div className="w-3/4 2xl:w-1/2 md:py-4 border-b border-slate-300">
+                <h2 className="font-black px-30 w-full text-center font-sans text-xl pb-4">
                     Há mais de 30 anos oferecendo materiais de construção, ferramentas, tintas, elétrica, hidráulica e
                     muito mais. Atendimento rápido, estoque completo e entrega para a região.
                 </h2>
             </div>
 
-            <div className="w-full lg:w-[95%] mt-8">
-                <h2 className="font-black px-30 w-full text-center font-sans text-4xl  px-2">Destaques</h2>
+            <div className="w-full lg:w-[95%] 2xl:w-[80%] flex flex-col gap-4 py-8 border-b border-slate-300">
+                <h2 className="font-black px-30 w-full text-center font-sans text-4xl px-2">Destaques</h2>
                 <Carrosel produtos={produtos} />
             </div>
 

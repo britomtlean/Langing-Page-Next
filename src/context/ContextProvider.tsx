@@ -65,7 +65,7 @@ export const ContextProvider = ({ children }: PropsWithChildren) => {
                 imagem: produto.imagem,
                 quantidade: quantidade,
                 valorUnitario: valorUnitario,
-                subtotal: quantidade * quantidade
+                subtotal: quantidade * valorUnitario
             }
 
         try {
@@ -97,7 +97,7 @@ export const ContextProvider = ({ children }: PropsWithChildren) => {
             nome: produto.nome,
             quantidade: quantidade,
             valorUnitario: valorUnitario,
-            subtotal: quantidade * quantidade,
+            subtotal: quantidade * valorUnitario,
         };
 
 
