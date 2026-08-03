@@ -35,9 +35,21 @@ const Carrosel = ({produtos} : {produtos: any}) => {
           </button>
 
           <img
-              className="md:w-[90%] flex-2 max-h-[200px] overflow-hidden object-contain
-                  md:max-h-[200px]"
+              className="md:w-[30%] h-full bg-indigo-100 flex-2 overflow-hidden object-contain border border-slate-200
+                  "
               src={item[0].imagem}
+              alt=""
+          />
+          <img
+              className="md:w-[30%] h-full bg-indigo-100 flex-2 overflow-hidden object-contain border border-slate-200
+                  "
+              src={item[1].imagem}
+              alt=""
+          />
+          <img
+              className="md:w-[30%] h-full bg-indigo-100 flex-2 overflow-hidden object-contain border border-slate-200
+                  "
+              src={item[2].imagem}
               alt=""
           />
 

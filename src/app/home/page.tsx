@@ -18,8 +18,8 @@ const Page = async () => {
             flex flex-col justify-start items-center"
         >
             <div
-                className="w-full lg:w-[95%] 2xl:w-[80%] lg:h-[400px]
-                flex flex-col lg:flex-row items-center lg:items-start gap-4 py-5"
+                className="w-full lg:w-[95%] 2xl:w-[80%] lg:h-[380px]
+                flex flex-col lg:flex-row items-center lg:items-start gap-4 py-4"
             >
                 <main className="w-[95%] lg:w-[75%] 2xl:w-4/5 flex flex-wrap flex-col gap-8 ">
                     <div
@@ -78,14 +78,14 @@ const Page = async () => {
                 <Carrinho />
             </div>
 
-            <div className="w-3/4 2xl:w-1/2 md:py-4 border-b border-slate-300">
-                <h2 className="font-black px-30 w-full text-center font-sans text-xl pb-4">
+            <div className="w-3/4 2xl:w-1/2 border-b border-slate-300">
+                <h2 className="font-black px-30 w-full text-center font-sans text-2xl pb-8">
                     Há mais de 30 anos oferecendo materiais de construção, ferramentas, tintas, elétrica, hidráulica e
                     muito mais. Atendimento rápido, estoque completo e entrega para a região.
                 </h2>
             </div>
 
-            <div className="w-full lg:w-[95%] 2xl:w-[80%] flex flex-col gap-4 py-8 border-b border-slate-300">
+            <div className="w-full lg:w-[95%] 2xl:w-[80%] flex flex-col gap-10 py-8 border-b border-slate-300">
                 <h2 className="font-black px-30 w-full text-center font-sans text-4xl px-2">Destaques</h2>
                 <Carrosel produtos={produtos} />
             </div>
