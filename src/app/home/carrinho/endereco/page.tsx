@@ -4,10 +4,11 @@ import { ArrowBigLeft, MapPinned } from 'lucide-react';
 import { useCarrinho } from '@/context/ContextProvider';
 import Link from 'next/link';
 import { useState } from 'react';
+import Carrinho from '../../Carrinho';
 
 const Page = () => {
 
-    const { adicionarCarrinho, produtosCarrinho } = useCarrinho();
+    const { adicionarCarrinho, produtosCarrinho, carrinho } = useCarrinho();
 
     const [endereco, setEndereco] = useState({
         cep: '',
@@ -99,6 +100,7 @@ const Page = () => {
                                     placeholder="Digite o seu nome"
                                     className="w-full mt-2 p-3 rounded-lg border border-slate-400"
                                     value={endereco.nome}
+                                    required
                                     onChange={(e) =>
                                         setEndereco({
                                             ...endereco,
@@ -107,19 +109,55 @@ const Page = () => {
                                     }
                                 />
                             </div>
+
                             <div>
                                 <label className="font-semibold text-black">Contato</label>
                                 <input
                                     type="tel"
+                                    inputMode="numeric"
                                     placeholder="Digite o seu WhatsApp"
+                                    maxLength={19}
                                     className="w-full mt-2 p-3 rounded-lg border border-slate-400"
                                     value={endereco.contato}
-                                    onChange={(e) =>
+                                    required
+                                    onChange={(e) => {
+                                        let value = e.target.value;
+
+                                        // Remove tudo que não for número
+                                        let numbers = value.replace(/\D/g, '');
+
+                                        // Remove o 55 caso o usuário digite manualmente
+                                        if (numbers.startsWith('55')) {
+                                            numbers = numbers.slice(2);
+                                        }
+
+                                        // Limita a 11 dígitos: DDD + celular
+                                        numbers = numbers.slice(0, 11);
+
+                                        // Formata
+                                        let formatted = '+55';
+
+                                        if (numbers.length > 0) {
+                                            formatted += ' (' + numbers.slice(0, 2);
+                                        }
+
+                                        if (numbers.length >= 2) {
+                                            formatted += ') ';
+                                        }
+
+                                        if (numbers.length > 2) {
+                                            formatted += numbers.slice(2, 7);
+                                        }
+
+                                        if (numbers.length >= 7) {
+                                            formatted += '-' + numbers.slice(7, 11);
+                                        }
+
                                         setEndereco({
                                             ...endereco,
-                                            contato: e.target.value,
-                                        })
-                                    }
+                                            contato: formatted,
+                                        });
+                                    }}
                                 />
                             </div>
                             <div className="col-span-1">
@@ -127,16 +165,17 @@ const Page = () => {
 
                                 <input
                                     type="text"
+                                    inputMode="numeric"
                                     placeholder="00000-000"
                                     className="w-full mt-2 p-3 rounded-lg border border-slate-400"
                                     value={endereco.cep}
+                                    required
                                     onChange={(e) =>
                                         setEndereco({
                                             ...endereco,
                                             cep: e.target.value,
                                         })
                                     }
-                                    onBlur={buscarCep}
                                 />
                             </div>
 
@@ -151,6 +190,7 @@ const Page = () => {
                                         text-white
                                         hover:bg-blue-700
                                     "
+                                    onBlur={buscarCep}
                                 >
                                     Buscar CEP
                                 </button>
@@ -265,7 +305,8 @@ const Page = () => {
             <div className="flex justify-center">
                 <button
                     onClick={() => {
-                        adicionarCarrinho(endereco.nome, endereco.contato, endereco.rua);
+
+                        adicionarCarrinho(endereco.nome, endereco.contato, (endereco.rua+", "+endereco.numero ));
                     }}
                     className="
                     flex justify-center
