@@ -7,31 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-type GastosMensaisGastos {
-  gasto Float
-  nome  String
-}
-
 type PedidosProdutos {
   Nome          String
   ProdutoId     String
   Quantidade    Int
   Subtotal      Float
   ValorUnitario Float
-}
-
-model Clientes {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  celular  String
-  endereco String
-  nome     String
-}
-
-model GastosMensais {
-  id        String                @id @default(auto()) @map("_id") @db.ObjectId
-  UsuarioId String                @db.ObjectId
-  gastos    GastosMensaisGastos[]
-  mes       String
 }
 
 model Pedidos {
@@ -41,20 +22,23 @@ model Pedidos {
   EnderecoCliente String
   NomeCliente     String
   Produtos        PedidosProdutos[]
-  Status          Boolean?
+  Status          Boolean
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  StatusEntrega   Json?
   ValorTotal      Float
 }
 
 model Produtos {
-  id              String                    @id @default(auto()) @map("_id") @db.ObjectId
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
   categoria       String?
-  data_criacao    DateTime                  @db.Date
-  descricao       String?
-  disponibilidade Boolean?
+  cpf             String
+  data_criacao    DateTime @db.Date
+  descricao       String
+  disponibilidade Boolean
   estoque         Int
   imagem          String
   nome            String
-  valor           Unsupported("Decimal128")
+  valor           Float
 }
 
 model Usuarios {

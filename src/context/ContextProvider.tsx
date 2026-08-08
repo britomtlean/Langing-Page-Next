@@ -57,7 +57,7 @@ export const ContextProvider = ({ children }: PropsWithChildren) => {
 
 
             const quantidade = 1;
-            const valorUnitario = 10.00;
+            const valorUnitario = produto.valor;
 
             const produtoConvertido: Produto = {
                 produtoId: produto.id,
@@ -90,7 +90,7 @@ export const ContextProvider = ({ children }: PropsWithChildren) => {
     function incrementarProduto(produto: Produto) {
 
         const quantidade = 1;
-        const valorUnitario = 10.0;
+        const valorUnitario = produto.valorUnitario;
 
         const produtoConvertido: Produto = {
             produtoId: produto.produtoId,

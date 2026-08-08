@@ -67,6 +67,12 @@ const Produtos = ({ produtos }: { produtos: any }) => {
                                             <h2 className="text-lg font-semibold">{produto.nome}</h2>
 
                                             <p className="text-sm text-slate-600 line-clamp-2">{produto.descricao}</p>
+                                            <p className="text-sm text-slate-600 line-clamp-2">
+                                                {produto.valor.toLocaleString('pt-BR', {
+                                                    style: 'currency',
+                                                    currency: 'BRL',
+                                                })}
+                                            </p>
 
                                             <span
                                                 className={`text-sm font-medium ${
