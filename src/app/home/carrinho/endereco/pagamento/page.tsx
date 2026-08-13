@@ -32,7 +32,7 @@ const Page = () => {
                 .start()
                 .then(() => {
                     console.log('✅ Conectado ao SignalR');
-                    connection.invoke('EntrarSala', `${JSON.stringify(carrinho?.contatoCliente)}`);
+                    connection.invoke('EntrarSala', JSON.stringify({ sala: carrinho?.contatoCliente}));
 
 
                     // ESCUTA MENSAGEM DO SERVIDOR
