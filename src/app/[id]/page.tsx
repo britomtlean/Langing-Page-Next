@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 
 import Image from 'next/image';
 import Produtos from './Produtos';
@@ -8,9 +8,30 @@ import { MdAccessTimeFilled } from 'react-icons/md';
 import { IoLogoWhatsapp } from 'react-icons/io';
 import Carrinho from './Carrinho';
 import Carrosel from './Carrosel';
+import { div } from 'framer-motion/client';
 
-const Page = async () => {
-    const produtos = await prisma.produtos.findMany();
+const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
+
+    const { id } = await params;
+
+    const produtos = await prisma.produtos.findMany({
+        where: {
+            disponibilidade: true,
+            login: id,
+        },
+        select: {
+            id: true,
+            categoria: true,
+            descricao: true,
+            imagem: true,
+            nome: true,
+            disponibilidade: true,
+            valor: true,
+        },
+    });
+
+
+    if(produtos.length == 0) return <div className='h-screen w-full flex justify-center items-center font-mono font-bold text-3xl'>Pagina não encontrada</div>
 
     return (
         <div
@@ -75,7 +96,7 @@ const Page = async () => {
                     </div>
                 </main>
 
-                <Carrinho />
+                <Carrinho id={id} />
             </div>
 
             <div className="w-3/4 2xl:w-1/2 border-b border-slate-300">

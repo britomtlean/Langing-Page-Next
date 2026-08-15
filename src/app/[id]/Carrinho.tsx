@@ -4,7 +4,7 @@ import { useCarrinho } from '@/context/ContextProvider';
 import { Produtos } from '@prisma/client';
 import Link from 'next/link';
 
-export default function Carrinho() {
+export default function Carrinho({id}: {id: string}) {
 
     const { produtosCarrinho, decrementarProduto, incrementarProduto } = useCarrinho();
 
@@ -91,7 +91,7 @@ export default function Carrinho() {
                                 focus:ring-2
                                 focus:ring-blue-400
                                 "
-                            href={'/home/carrinho'}
+                            href={id+'/carrinho'}
                         >
                             Ver carrinho
                         </Link>
