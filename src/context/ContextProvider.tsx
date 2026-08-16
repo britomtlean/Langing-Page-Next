@@ -48,7 +48,7 @@ export const ContextProvider = ({ children }: PropsWithChildren) => {
         setCarrinho(carrinho);
 
 
-        navigate.push('/home/carrinho/endereco/pagamento');
+        navigate.push('/colonia_material/carrinho/endereco/pagamento');
 
 
     }

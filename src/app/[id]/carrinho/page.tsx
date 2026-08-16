@@ -106,7 +106,7 @@ const Page = () => {
                                 focus:ring-2
                                 focus:ring-blue-400
                                 "
-                  href={`/home/carrinho/endereco`}
+                  href={`/colonia_material/carrinho/endereco`}
               >
                   Próximo
               </Link>

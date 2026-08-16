@@ -59,7 +59,7 @@ const Page = () => {
             {/* Cabeçalho */}
             <div className="flex justify-center relative">
                 <Link
-                    href={`/home/carrinho`}
+                    href={`/colonia_material/carrinho`}
                     className="
                         absolute left-20
                         flex items-center gap-2
