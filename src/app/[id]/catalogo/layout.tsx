@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import ContextProvider from "@/context/ContextProvider";
 //import { Inter, Geist } from "next/font/google";
 import { Inter } from 'next/font/google';
-import "../globals.css";
+import "../../globals.css";
 import { cn } from "@/lib/utils";
 import { Button } from "@base-ui/react";
 import { HomeIcon } from "lucide-react";
@@ -37,11 +37,11 @@ export default function RootLayout({
                                 text-white font-bold text-2xl
                                 lg:flex justify-around items-center gap-8 xl:w-1/2"
                   >
-                      <a href="/home">
+                      <a href="/">
                           <HomeIcon className="size-10" />
                       </a>
                       <a>Promoções</a>
-                      <a target="_blank" href={'/catalogo'}>
+                      <a target="_blank" href={'/produtos'}>
                           Catálogo
                       </a>
                       <a>Minha conta</a>

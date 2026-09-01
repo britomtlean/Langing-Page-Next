@@ -22,9 +22,8 @@ model Pedidos {
   EnderecoCliente String
   NomeCliente     String
   Produtos        PedidosProdutos[]
-  Status          Boolean
-  /// Could not determine type: the field only had null or empty values in the sample set.
-  StatusEntrega   Json?
+  Status          Boolean?
+  StatusEntrega   String?
   ValorTotal      Float
 }
 
@@ -41,9 +40,23 @@ model Produtos {
   valor           Float
 }
 
+model Promocoes {
+  id               String  @id @default(auto()) @map("_id") @db.ObjectId
+  descricao        String
+  enderecoDaImagem String
+  login            String
+  visibilidade     Boolean
+}
+
 model Usuarios {
-  id    String  @id @default(auto()) @map("_id") @db.ObjectId
-  Nome  String
-  Senha String?
-  user  String
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  Descricao String
+  Endereco  String
+  Horario   String
+  Instagram String
+  Logo      String?
+  Nome      String
+  Senha     String
+  WhatsApp  String
+  user      String @unique
 }
