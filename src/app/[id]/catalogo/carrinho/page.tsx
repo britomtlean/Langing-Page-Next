@@ -1,12 +1,14 @@
 'use client'
-import React from 'react'
-import { useCarrinho } from '@/context/ContextProvider'
+import React, { useContext } from 'react'
+import { Context } from '@/context/ContextProvider'
 import { ArrowBigLeft, ShoppingCart } from 'lucide-react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation';
 
 const Page = () => {
 
-  const { produtosCarrinho, incrementarProduto, decrementarProduto } = useCarrinho();
+  const { produtosCarrinho, incrementarProduto, decrementarProduto } = useContext(Context)!;
+  const pathname = usePathname();
 
   return (
       <div
@@ -14,7 +16,7 @@ const Page = () => {
             flex flex-col gap-10"
       >
           <div className="flex justify-center">
-              <Link className="text-black absolute left-20 bg-slate-300 p-4 rounded-lg flex gap-2" href={`/home`}>
+              <Link className="text-black absolute left-20 bg-slate-300 p-4 rounded-lg flex gap-2" href="../catalogo">
                   <ArrowBigLeft className="text-slate-600" /> <strong>Retornar</strong>
               </Link>
               <h2 className="text-3xl font-bold mb-4 text-center text-black">Reveja os detalhes do seu pedido</h2>
@@ -106,7 +108,7 @@ const Page = () => {
                                 focus:ring-2
                                 focus:ring-blue-400
                                 "
-                  href={`/colonia_material/carrinho/endereco`}
+                  href={`${pathname}/endereco`}
               >
                   Próximo
               </Link>

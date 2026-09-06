@@ -1,13 +1,14 @@
 'use client';
 
-import { useCarrinho } from '@/context/ContextProvider';
-import { Produtos } from '@prisma/client';
+import { Context } from '@/context/ContextProvider';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useContext } from 'react';
 
 export default function Carrinho({id}: {id: string}) {
 
-    const { produtosCarrinho, decrementarProduto, incrementarProduto } = useCarrinho();
-
+    const { produtosCarrinho, decrementarProduto, incrementarProduto } = useContext(Context)!;
+    const pathname = usePathname();
 
     return (
         <aside
@@ -91,7 +92,7 @@ export default function Carrinho({id}: {id: string}) {
                                 focus:ring-2
                                 focus:ring-blue-400
                                 "
-                            href={id+'/carrinho'}
+                            href={`${pathname}/carrinho`}
                         >
                             Ver carrinho
                         </Link>

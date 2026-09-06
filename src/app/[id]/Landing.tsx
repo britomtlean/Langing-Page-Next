@@ -20,7 +20,7 @@ export default function Landing({ user }: { user: Usuarios | null }) {
                 transition={{ duration: 1.2, ease: 'easeIn' }}
             >
                 <Image
-                    src="/logo-colonia.jpeg"
+                    src={`/logo-${user?.id}.jpeg`}
                     alt="Logo"
                     width={200}
                     height={200}

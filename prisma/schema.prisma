@@ -15,6 +15,15 @@ type PedidosProdutos {
   ValorUnitario Float
 }
 
+model PedidoCliente {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  Contato String
+  Data    DateTime @db.Date
+  Login   String
+  Nome    String
+  Produto String
+}
+
 model Pedidos {
   id              String            @id @default(auto()) @map("_id") @db.ObjectId
   ContatoCliente  String
@@ -30,6 +39,8 @@ model Pedidos {
 model Produtos {
   id              String   @id @default(auto()) @map("_id") @db.ObjectId
   categoria       String?
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  codigoBarra     Json?
   data_criacao    DateTime @db.Date
   descricao       String
   disponibilidade Boolean
@@ -37,7 +48,7 @@ model Produtos {
   imagem          String
   login           String
   nome            String
-  valor           Float
+  valor           String
 }
 
 model Promocoes {

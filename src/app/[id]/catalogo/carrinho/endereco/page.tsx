@@ -1,14 +1,13 @@
 'use client';
 
 import { ArrowBigLeft, MapPinned } from 'lucide-react';
-import { useCarrinho } from '@/context/ContextProvider';
+import { Context } from '@/context/ContextProvider';
 import Link from 'next/link';
-import { useState } from 'react';
-import Carrinho from '../../Carrinho';
+import { useContext, useState } from 'react';
 
 const Page = () => {
 
-    const { adicionarCarrinho, produtosCarrinho, carrinho } = useCarrinho();
+    const { adicionarCarrinho, produtosCarrinho, carrinho } = useContext(Context)!;
 
     const [endereco, setEndereco] = useState({
         cep: '',
@@ -59,7 +58,7 @@ const Page = () => {
             {/* Cabeçalho */}
             <div className="flex justify-center relative">
                 <Link
-                    href={`/colonia_material/carrinho`}
+                    href={`../carrinho`}
                     className="
                         absolute left-20
                         flex items-center gap-2

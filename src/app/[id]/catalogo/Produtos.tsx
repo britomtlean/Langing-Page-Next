@@ -1,12 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Image from 'next/image';
 import type { Produtos } from '@prisma/client';
-import { useCarrinho } from '@/context/ContextProvider';
+import { Context } from '@/context/ContextProvider';
 
 const Produtos = ({ produtos }: { produtos: any }) => {
-    const { incluirProduto } = useCarrinho();
+    const { incluirProduto } = useContext(Context)!;
 
     const [categoria, setCategoria] = useState<string | null>(null);
 
@@ -32,14 +32,6 @@ const Produtos = ({ produtos }: { produtos: any }) => {
                         <option value={'Outros'}>Outros</option>
                     </select>
 
-                    {/*<input
-                        className="bg-gray-300 w-full lg:w-[40vw] 2xl:w-2/6 outline-none border border-slate-300 p-4 rounded-md"
-                        type="search"
-                        placeholder="Pesquisar produtos..."
-                        onFocus={() => {
-                            '';
-                        }}
-                    />*/}
                 </div>
 
                 <div className="flex flex-wrap flex-col w-full h-full gap-4">
@@ -68,7 +60,7 @@ const Produtos = ({ produtos }: { produtos: any }) => {
 
                                             <p className="text-sm text-slate-600 line-clamp-2">{produto.descricao}</p>
                                             <p className="text-sm text-slate-600 line-clamp-2">
-                                                {produto.valor.toLocaleString('pt-BR', {
+                                                {Number(produto.valor).toLocaleString('pt-BR', {
                                                     style: 'currency',
                                                     currency: 'BRL',
                                                 })}
@@ -81,10 +73,6 @@ const Produtos = ({ produtos }: { produtos: any }) => {
                                             >
                                                 {produto.disponibilidade ? 'Disponível' : 'Indisponível'}
                                             </span>
-
-                                            <span className="text-sm text-slate-500">Estoque: {produto.estoque}</span>
-
-                                            {/* <strong className="text-2xl mt-2">R$ {Number(produto.valor).toFixed(2)}</strong>*/}
 
                                             <button
                                                 onClick={() => incluirProduto(produto)}

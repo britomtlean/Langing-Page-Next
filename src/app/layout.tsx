@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
       <html lang="pt-br" className={cn('font-sans')}>
           <body className={inter.className}>
-              <ContextProvider>{children}</ContextProvider>
+            {children}
           </body>
       </html>
   );

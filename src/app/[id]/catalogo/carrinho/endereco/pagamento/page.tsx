@@ -1,13 +1,13 @@
 'use client';
 
 import { ArrowBigLeft, CreditCard, QrCode, Banknote, ReceiptText } from 'lucide-react';
-import { useCarrinho } from '@/context/ContextProvider';
+import { Context } from '@/context/ContextProvider';
 import Link from 'next/link';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 const Page = () => {
-    const { carrinho } = useCarrinho();
+    const { carrinho } = useContext(Context)!;
 
     const [modoPagamento, setModoPagamento] = useState<string | null>(null);
 
@@ -90,7 +90,7 @@ const Page = () => {
             {/* Cabeçalho */}
             <div className="relative flex justify-center">
                 <Link
-                    href={'/colonia_material/carrinho/endereco'}
+                    href={'../endereco'}
                     className="
                         absolute left-20
                         flex items-center gap-2
@@ -127,6 +127,7 @@ const Page = () => {
                         {/* Cartão */}
                         <label
                             className="
+                                opacity-40
                                 flex
                                 items-center
                                 gap-5
@@ -139,6 +140,7 @@ const Page = () => {
                             "
                         >
                             <input
+                                disabled
                                 type="radio"
                                 name="pagamento"
                                 value="Online"
