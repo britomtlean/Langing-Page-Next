@@ -20,7 +20,9 @@ export default function Landing({ user }: { user: Usuarios | null }) {
                 transition={{ duration: 1.2, ease: 'easeIn' }}
             >
                 <Image
-                    src={`/logo-${user?.id}.jpeg`}
+                    src={
+                        user?.Logo || 'https://res.cloudinary.com/dolfatptk/image/upload/v1788721062/images_saqhkw.jpg'
+                    }
                     alt="Logo"
                     width={200}
                     height={200}

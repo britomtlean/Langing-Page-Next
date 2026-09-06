@@ -15,6 +15,13 @@ type PedidosProdutos {
   ValorUnitario Float
 }
 
+model Categoria {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  Imagem String
+  Login  String
+  Nome   String
+}
+
 model PedidoCliente {
   id      String   @id @default(auto()) @map("_id") @db.ObjectId
   Contato String
@@ -52,22 +59,23 @@ model Produtos {
 }
 
 model Promocoes {
-  id               String  @id @default(auto()) @map("_id") @db.ObjectId
-  descricao        String
-  enderecoDaImagem String
-  login            String
-  visibilidade     Boolean
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  Descricao    String
+  Imagem       String
+  Login        String
+  Visibilidade Boolean
 }
 
 model Usuarios {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  Descricao String
-  Endereco  String
-  Horario   String
-  Instagram String
-  Logo      String?
-  Nome      String
-  Senha     String
-  WhatsApp  String
-  user      String @unique
+  id         String  @id @default(auto()) @map("_id") @db.ObjectId
+  Background String?
+  Descricao  String
+  Endereco   String
+  Horario    String
+  Instagram  String
+  Logo       String
+  Nome       String
+  Senha      String
+  WhatsApp   String
+  user       String @unique
 }

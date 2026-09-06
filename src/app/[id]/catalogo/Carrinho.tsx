@@ -17,10 +17,10 @@ export default function Carrinho({id}: {id: string}) {
             flex flex-col fixed
             lg:h-full lg:max-h-[320px] 2xl:max-h-[350px] lg:w-[25%] 2xl:w-1/5 lg:relative lg:pt-8 z-50"
         >
-            <h2 className="text-2xl font-bold mb-4 text-center">Carrinho</h2>
+            <h2 className="text-xl font-bold mb-4 text-center">Carrinho</h2>
 
             {produtosCarrinho.length === 0 ? (
-                <h1 className="bg-slate-400 p-5 rounded-lg text-center ">Carrinho vazio</h1>
+                <h1 className="bg-slate-400 p-5 rounded-lg text-center text-black text-sm">Carrinho vazio</h1>
             ) : (
                 <>
                     <div className="flex flex-col gap-3 overflow-y-auto flex-1">

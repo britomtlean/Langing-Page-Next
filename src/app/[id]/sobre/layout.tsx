@@ -8,7 +8,7 @@ import { HomeIcon } from "lucide-react";
 import prisma from "@/app/_db/prisma";
 import { Usuarios } from "@prisma/client";
 import { ProdutoDB } from "@/Types/Types";
-import Link from 'next/link';
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -51,7 +51,7 @@ export default async function RootLayout({ children, params }: { children: React
             <body className={inter.className}>
                 <header
                     className="w-full h-[10vh] bg-blue-800 relative
-                        flex justify-around lg:justify-center items-center lg:items-center"
+                        flex justify-around lg:justify-center items-center lg:items-center z-20"
                 >
                     <h1 className="text-white text-xl font-sans font-bold lg:hidden">Faça o seu login</h1>
                     <Button className={`${'lg:hidden'}`}>Login</Button>
@@ -65,7 +65,9 @@ export default async function RootLayout({ children, params }: { children: React
                             <HomeIcon className="size-8" />
                         </Link>
 
-                        <Link href={`/${login.user}/catalogo/search`}>Catálogo</Link>
+                        <Link href={`/${login.user}/catalogo/search`}>
+                            Catálogo
+                        </Link>
 
                         <Link href={'/'}>Promoções</Link>
 
@@ -80,7 +82,7 @@ export default async function RootLayout({ children, params }: { children: React
                 </ContextProvider>
 
                 <footer className="bg-blue-900 text-white">
-                    <div className="max-w-7xl mx-auto px-6 py-12 grid gap-10 md:grid-cols-3">
+                    <div className="max-w-7xl mx-auto px-6 py-12 grid gap-10 md:grid-cols-3 z-20">
                         {/* Empresa */}
                         <section>
                             <h2 className="text-lg font-bold mb-4">{login.Nome}</h2>

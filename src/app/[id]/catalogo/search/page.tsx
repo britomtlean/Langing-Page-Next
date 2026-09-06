@@ -23,37 +23,42 @@ export default function Page({searchParams}: { searchParams: { produto?: string 
 
 
     return (
-        <div
-            className="text-2xl text-black font-sans font-medium w-[90%] min-h-[50vh] mx-auto
+        <>
+            <h1 className="text-3xl w-full text-center text-black py-10">Resultado da pesquisa: {busca}</h1>
+            <div
+                className="text-2xl text-black font-sans font-medium w-[90%] min-h-[50vh] mx-auto py-[2%]
             grid grid-cols-3 gap-2 mb-4"
-        >
-            {produtosSearch?.map((p) => (
-                <div className="flex gap-4 items-center w-full h-[400px] border-2 bg-slate-100 border-blue-700/30" key={p.id}>
-                    <img src={p.imagem} alt={p.imagem} width={200} height={200} className="rounded-lg" />
+            >
+                {produtosSearch?.map((p) => (
                     <div
-                        className="w-full h-full
-                                grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-2"
+                        className="flex justify-start items-center w-full h-[180px] border-2 bg-slate-100 border-blue-700/30 rounded-xl pr-2"
+                        key={p.id}
                     >
-                        <div className="flex w-full flex-col items-center justify-center p-20 border border-slate-300 rounded-lg">
-                            <h1 className="text-xl mb-3 font-semibold">{p.nome}</h1>
-                            <h1 className="text-md font-light">{p.descricao}</h1>
-                            <h1 className="text-xl">
-                                {Number(p.valor).toLocaleString('pt-BR', {
-                                    style: 'currency',
-                                    currency: 'BRL',
-                                })}
-                            </h1>
-                            <button
-                                className="mt-auto bg-red-600 text-white py-4 rounded-lg p-4 lg:w-[100%]
+                        <img src={p.imagem} alt={p.imagem} className="rounded-lg max-h-[150px]" />
+                        <div
+                            className="w-full h-full
+                                grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-2"
+                        >
+                            <div className="flex w-full flex-col items-center justify-center">
+                                <h1 className="text-sm mb-3 font-semibold">{p.nome}</h1>
+                                <h1 className="text-sm font-extrabold">
+                                    {Number(p.valor).toLocaleString('pt-BR', {
+                                        style: 'currency',
+                                        currency: 'BRL',
+                                    })}
+                                </h1>
+                                <button
+                                    className="bg-red-600 text-white py-2 rounded-lg lg:w-[80%] text-sm mt-5
                                                 hover:bg-cyan-300 disabled:bg-slate-300
                                                 disabled:cursor-not-allowed transition"
-                            >
-                                Detalhes
-                            </button>
+                                >
+                                    Detalhes
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            ))}
-        </div>
+                ))}
+            </div>
+        </>
     );
 }

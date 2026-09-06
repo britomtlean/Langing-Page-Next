@@ -33,21 +33,24 @@ const Page = () => {
                         bg-slate-300 rounded-lg p-4 px-8 border border-slate-200"
                     >
                         <Image
-                            src={`/logo-${dadosEstabelecimento?.id}.jpeg`}
+                            src={
+                                dadosEstabelecimento?.Logo ||
+                                'https://res.cloudinary.com/dolfatptk/image/upload/v1788721062/images_saqhkw.jpg'
+                            }
                             alt="Logo"
-                            width={200}
-                            height={200}
+                            width={150}
+                            height={150}
                             className="rounded-lg"
                         />
 
                         <div className="flex flex-col justify-start items-start lg:gap-4">
-                            <h1 className="lg:text-5xl font-extrabold font-sans text-center py-5">
+                            <h1 className="lg:text-3xl font-extrabold font-sans text-center py-5">
                                 {dadosEstabelecimento.Nome}
                             </h1>
 
                             <div
                                 className="flex lg:flex-row flex-col gap-5
-                                list-none font-sans font-medium text-md"
+                                list-none font-sans font-medium text-sm"
                             >
                                 <div className="flex gap-2 justify-center items-center">
                                     <MdPlace />
@@ -67,7 +70,7 @@ const Page = () => {
                         </div>
 
                         <div>
-                            <img src="/logo.jpg" className="w-[220px] rounded-lg" />
+                            <img src="/logo.jpg" className="lg:w-[180px] rounded-lg" />
                         </div>
                     </div>
 
@@ -93,16 +96,20 @@ const Page = () => {
                 {<Carrinho id={dadosEstabelecimento.id} />}
             </div>
 
-            <div className="w-3/4 2xl:w-1/2 border-b border-slate-300 mt-10">
-                <h2 className="font-medium text-slate-800 px-30 w-full text-center font-sans text-2xl pb-8">
+            <div className="w-3/4 border-b border-slate-300 py-5">
+                <h2 className="font-medium text-slate-800 px-30 w-full text-center font-sans text-xl pb-8">
                     {dadosEstabelecimento.Descricao}
                 </h2>
             </div>
 
-            <div className="w-full lg:w-[95%] 2xl:w-[80%] flex flex-col gap-10 py-8 border-b border-slate-300">
-                <h2 className="font-black px-30 w-full text-center font-sans text-4xl px-2">Destaques</h2>
-                <Carrosel produtos={produtosEstabelecimento} />
-            </div>
+            {produtosEstabelecimento?.length == 0 ? (
+                <h1 className='text-3xl'>Não há produtos cadastrados</h1>
+            ) : (
+                <div className="w-full lg:w-[95%] 2xl:w-[80%] flex flex-col gap-10 py-8 border-b border-slate-300">
+                    <h2 className="font-black px-30 w-full text-center font-sans text-4xl px-2">Destaques</h2>
+                    <Carrosel produtos={produtosEstabelecimento} />
+                </div>
+            )}
 
             <Produtos produtos={produtosEstabelecimento} />
         </div>
